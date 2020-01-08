@@ -116,7 +116,7 @@ For snapshot version, keep the latest version. For canonical version, keep the t
 | bar/app | 1.2 | keep |
 | bar/app | 2.2 | keep |
 
-1. Invoke "docker rmi" to remove image
+6. Invoke "docker rmi" to remove image
 
 ## Argument
 
