@@ -6,13 +6,13 @@ Remove obsolete docker images.
 
 Install Docker.
 
-## Acceptable tag syntax
+## Supported tag syntax
 
-The tags following this regex are acceptable:
+The tags following this regex are supported:
 
     ^[vV]?(\d{1,5})(\.\d{1,5})?(\.\d{1,5})?(-.*)?$
 
-ex) Acceptable tag:
+ex) Supported tags:
 
     1.0
     1.0-SNAPSHOT
@@ -20,7 +20,7 @@ ex) Acceptable tag:
     2.0-BR291-SNAPSHOT
     8-jdk
 
-ex) Non acceptable tag:
+ex) Non supported tag:
 
     123456.1 (major version has more than 5 digits)
     ver1.2
