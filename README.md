@@ -49,7 +49,7 @@ ex) Branch: BR102(snapshot version)
 
 ## How it works
 
-1. Invoke "docker images" to obtain the list of docker image.<br/>
+1. Invoke "docker images" to obtain the list of docker image.
 
 | Image name | tag |
 -|-
@@ -101,8 +101,7 @@ ex) Branch: BR102(snapshot version)
 | bar/app | 1.2 |
 | bar/app | 2.2 |
 
-5. Apply the following rule.
-
+5. Apply the following rule.<br/>
 For snapshot version, keep the latest version. For canonical version, keep the three newest versions. You can modify the keep count by argument.
 
 | Image name | tag | delete |
