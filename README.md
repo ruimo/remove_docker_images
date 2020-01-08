@@ -62,7 +62,7 @@ ex) Branch: BR102(snapshot version)
 | bar/app | 2.2 |
 | foo/myapp | 1.3 |
 
-2. Grouping the list by repository name.
+2. Grouping the list by image name.
 
 | Image name | tag |
 -|-
@@ -128,7 +128,7 @@ Do not invoke "docker rmi" instead, just show the images that will be deleted.
 - --keep [count]<br/>
 Specify keep count for canonical versions. Default to 3.
 
-- --keep-snapshot [count]<br/>    
+- --keep-snapshot [count]<br/>
 Specify keep count for snapshot versions. Default to 1.
 
 ## Binary
