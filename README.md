@@ -106,7 +106,7 @@ ex) Branch: BR102(snapshot version)
 For snapshot version, keep the latest version. For canonical version, keep the three newest versions. You can modify the keep count by argument.
 
 | Image name | tag | delete |
--|-
+-|-|-
 | foo/myapp | 1.0-SNAPSHOT | delete |
 | foo/myapp | 1.1-SNAPSHOT | keep |
 | foo/myapp | 1.0 | delete |
@@ -121,15 +121,19 @@ For snapshot version, keep the latest version. For canonical version, keep the t
 ## Argument
 
 - --version
+
 Show tool version.
 
 - --dry-run
+
 Do not invoke "docker rmi" instead, just show the images that will be deleted.
 
 - --keep <count>
+    
 Specify keep count for canonical versions. Default to 3.
 
 - --keep-snapshot <count>
+    
 Specify keep count for snapshot versions. Default to 1.
 
 ## Binary
