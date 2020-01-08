@@ -120,20 +120,16 @@ For snapshot version, keep the latest version. For canonical version, keep the t
 
 ## Argument
 
-- --version
-
+- --version<br/>
 Show tool version.
 
-- --dry-run
-
+- --dry-run<br/>
 Do not invoke "docker rmi" instead, just show the images that will be deleted.
 
-- --keep <count>
-    
+- --keep [count]<br/>
 Specify keep count for canonical versions. Default to 3.
 
-- --keep-snapshot <count>
-    
+- --keep-snapshot [count]<br/>    
 Specify keep count for snapshot versions. Default to 1.
 
 ## Binary
