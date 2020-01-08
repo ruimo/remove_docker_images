@@ -49,7 +49,7 @@ ex) Branch: BR102(snapshot version)
 
 ## How it works
 
-1. Invoke "docker images" to obtain the list of docker image.
+1. Invoke "docker images" to obtain the list of docker image.<br/>
 
 | Image name | tag |
 -|-
