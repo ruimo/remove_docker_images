@@ -1,27 +1,29 @@
 # Remove docker images
 
-Remove obsolete docker images. It supports the following tag syntax.
+Remove obsolete docker images.
 
 ## Prerequisite
 
 Install Docker.
 
-## Acceptable tag syntax
+## Supported tag syntax
 
-The tags following this regex are acceptable:
+The tags following this regex are supported:
 
     ^[vV]?(\d{1,5})(\.\d{1,5})?(\.\d{1,5})?(-.*)?$
 
-ex) Acceptable tag:
-1.0
-1.0-SNAPSHOT
-v2.10.1
-2.0-BR291-SNAPSHOT
-8-jdk
+ex) Supported tags:
 
-ex) Non acceptable tag:
-123456.1 (major version has more than 5 digits)
-ver1.2
+    1.0
+    1.0-SNAPSHOT
+    v2.10.1
+    2.0-BR291-SNAPSHOT
+    8-jdk
+
+ex) Non supported tag:
+
+    123456.1 (major version has more than 5 digits)
+    ver1.2
 
 ## Canonical version
 
@@ -38,10 +40,12 @@ If the tag ends with "-SNAPSHOT", it is recognized as a snapshot version.
 If non "-SNAPSHOT" string follows, it is recognized as a branch.
 
 ex) Branch: BR102(canonical version)
-1.4-BR102
+
+    1.4-BR102
 
 ex) Branch: BR102(snapshot version)
-1.4-BR102-SNAPSHOT
+
+    1.4-BR102-SNAPSHOT
 
 ## How it works
 
@@ -58,7 +62,7 @@ ex) Branch: BR102(snapshot version)
 | bar/app | 2.2 |
 | foo/myapp | 1.3 |
 
-1. Grouping the list by repository name.
+2. Grouping the list by image name.
 
 | Image name | tag |
 -|-
@@ -71,7 +75,7 @@ ex) Branch: BR102(snapshot version)
 | bar/app | 2.2 |
 | bar/app | 1.2 |
 
-1. Grouping the list by canonical/snapshot version.
+3. Grouping the list by canonical/snapshot version.
 
 | Image name | tag |
 -|-
@@ -84,7 +88,7 @@ ex) Branch: BR102(snapshot version)
 | bar/app | 2.2 |
 | bar/app | 1.2 |
 
-1. Sort by version number.
+4. Sort by version number.
 
 | Image name | tag |
 -|-
@@ -97,12 +101,11 @@ ex) Branch: BR102(snapshot version)
 | bar/app | 1.2 |
 | bar/app | 2.2 |
 
-1. Apply the following rule.
-
+5. Apply the following rule.<br/>
 For snapshot version, keep the latest version. For canonical version, keep the three newest versions. You can modify the keep count by argument.
 
 | Image name | tag | delete |
--|-|
+-|-|-
 | foo/myapp | 1.0-SNAPSHOT | delete |
 | foo/myapp | 1.1-SNAPSHOT | keep |
 | foo/myapp | 1.0 | delete |
@@ -112,20 +115,20 @@ For snapshot version, keep the latest version. For canonical version, keep the t
 | bar/app | 1.2 | keep |
 | bar/app | 2.2 | keep |
 
-1. Invoke "docker rmi" to remove image
+6. Invoke "docker rmi" to remove image
 
 ## Argument
 
-- --version
+- --version<br/>
 Show tool version.
 
-- --dry-run
+- --dry-run<br/>
 Do not invoke "docker rmi" instead, just show the images that will be deleted.
 
-- --keep <count>
+- --keep [count]<br/>
 Specify keep count for canonical versions. Default to 3.
 
-- --keep-snapshot <count>
+- --keep-snapshot [count]<br/>
 Specify keep count for snapshot versions. Default to 1.
 
 ## Binary
