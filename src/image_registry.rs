@@ -30,7 +30,13 @@ impl ImageRegistry for DockerImageRegistry {
             .output()
             .expect("Cannot run 'docker images'. Please check docker installation.");
 
-        parse_docker_image_list(out)
+        if out.status.success() {
+            parse_docker_image_list(out)
+        } else {
+            println!("stdout: {}", String::from_utf8_lossy(&out.stdout));
+            println!("stderr: {}", String::from_utf8_lossy(&out.stderr));
+            panic!("docker images fails with status {}.", out.status);
+        }
     }
     
     fn remove(&self, image_name: &str, ver: &version::Version, is_dryrun: bool) -> () {
@@ -39,11 +45,17 @@ impl ImageRegistry for DockerImageRegistry {
         if is_dryrun {
             println!("docker rmi {}", img);
         } else {
-            Command::new("docker")
+            let out = Command::new("docker")
                 .arg("rmi")
-                .arg(img)
+                .arg(&img)
                 .output()
                 .expect("Cannot run 'docker rmi {}'. Please check docker installation.");
+
+            if ! out.status.success() {
+                println!("stdout: {}", String::from_utf8_lossy(&out.stdout));
+                println!("stderr: {}", String::from_utf8_lossy(&out.stderr));
+                panic!("docker rmi {} fails with status {}.", img, out.status);
+            }
         }
     }
 }
@@ -58,7 +70,13 @@ impl ImageRegistry for IbmCloudRegistry {
             .output()
             .expect("Cannot run 'ibmcloud cr images'. Please check ibmcloud CLI installation.");
 
-        parse_docker_image_list(out)
+        if out.status.success() {
+            parse_docker_image_list(out)
+        } else {
+            println!("stdout: {}", String::from_utf8_lossy(&out.stdout));
+            println!("stderr: {}", String::from_utf8_lossy(&out.stderr));
+            panic!("ibmcloud cr images fails with status {}.", out.status);
+        }
     }
 
     fn remove(&self, image_name: &str, ver: &version::Version, is_dryrun: bool) -> () {
@@ -67,12 +85,18 @@ impl ImageRegistry for IbmCloudRegistry {
         if is_dryrun {
             println!("ibmcloud cr image-rm {}", img);
         } else {
-            Command::new("ibmcloud")
+            let out = Command::new("ibmcloud")
                 .arg("cr")
                 .arg("image-rm")
-                .arg(img)
+                .arg(&img)
                 .output()
                 .expect("Cannot run 'ibmcloud cr image-rm'. Please check ibmcloud CLI installation.");
+
+            if ! out.status.success() {
+                println!("stdout: {}", String::from_utf8_lossy(&out.stdout));
+                println!("stderr: {}", String::from_utf8_lossy(&out.stderr));
+                panic!("ibmcloud image-rm {} fails with status {}.", img, out.status);
+            }
         }
     }
 }
