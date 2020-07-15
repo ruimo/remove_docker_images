@@ -134,6 +134,37 @@ Specify keep count for snapshot versions. Default to 1.
 - --repository-type [type]<br/>
 Specify docker image repository type. Can use 'docker' and 'ibmcr'. The 'docker' means docker image repository. The 'ibmcr' means IBM Cloud Registry. Default to 'docker'.
 
+## IBM Cloud Registry
+
+If you want to use IBM Cloud Registry, specify '--repository-type ibmcr'. In this case, you need to login IBM Cloud Registry in advance.
+
+    $ ibmcloud login
+    $ ibmcloud cr login
+    $ remove_docker_images --repository-type ibmcr
+
+If you want to execute it in non-interactive environment such as in CI server, you can use API key.
+
+    $ export IBMCLOUD_API_KEY=YOUR_CONTAINER_REGISTRY_APIKEY
+    $ ibmcloud login
+    $ ibmcloud cr login
+    $ remove_docker_images --repository-type ibmcr
+
+You can create API key at web console:
+
+- Manage => IAM => Service IDs => Create
+- Input name and click Create.
+- Click Access Policies.
+- Click Assign access.
+- Select IAM services.
+- Click drop down 'No access' and select Container Registry.
+- In 'Service access', check Reader and Writer.
+- Click Add.
+- Click Assign.
+- Click API keys.
+- Click Create.
+- Input Name and click Create.
+- Now, you can copy the API Key.
+
 ## Binary
 
 Linux(x86_64):
