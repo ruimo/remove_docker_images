@@ -6,6 +6,9 @@ use std::fmt;
 
 use super::version;
 
+#[cfg(test)]
+use super::image;
+
 pub struct ImageEntry {
     pub id: String,
     pub ver: version::Version,
