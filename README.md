@@ -131,6 +131,9 @@ Specify keep count for canonical versions. Default to 3.
 - --keep-snapshot [count]<br/>
 Specify keep count for snapshot versions. Default to 1.
 
+- --repository-type [type]<br/>
+Specify docker image repository type. Can use 'docker' and 'ibmcr'. The 'docker' means docker image repository. The 'ibmcr' means IBM Cloud Registry. Default to 'docker'.
+
 ## Binary
 
 Linux(x86_64):
