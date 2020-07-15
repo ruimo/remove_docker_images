@@ -3,11 +3,13 @@ extern crate clap;
 use clap::{App, Arg};
 use std::fmt;
 use super::VERSION;
+use super::docker_registry_type;
 
 pub struct Args {
     pub is_dry_run: bool,
     pub keep_count: usize,
     pub keep_count_snapshot: usize,
+    pub repository_type: docker_registry_type::DockerRegistryType,
     pub show_version: bool,
 }
 
@@ -48,6 +50,11 @@ pub fn parse_arg() -> Args {
              .long("keep-snapshot")
              .default_value("1")
         )
+        .arg(Arg::with_name("repository-type")
+             .help("Specify docker image repository type (docker or ibmcr).")
+             .long("repository-type")
+             .default_value("docker")
+        )
         .arg(Arg::with_name("show-version")
              .help("Show version.")
              .long("version")
@@ -60,6 +67,7 @@ pub fn parse_arg() -> Args {
         is_dry_run: matches.is_present("dryrun"),
         keep_count: parse_int(matches.value_of("keep").unwrap(), "keep count"),
         keep_count_snapshot: parse_int(matches.value_of("keep-snapshot").unwrap(), "keep count snapshot"),
+        repository_type: docker_registry_type::parse(matches.value_of("repository-type").unwrap()).unwrap(),
         show_version: matches.is_present("show-version"),
     }
 }

@@ -1,13 +1,10 @@
 use std::hash::{Hash, Hasher};
-use std::process::Command;
-use std::io::{BufRead, BufReader};
 
 use std::collections::HashMap;
 use std::collections::HashSet;
 use std::fmt;
 
 use super::version;
-use super::image;
 
 pub struct ImageEntry {
     pub id: String,
@@ -66,44 +63,6 @@ impl Images {
             }
         }
     }
-}
-
-pub fn perform() -> image::Images {
-    let out = Command::new("docker")
-        .arg("images")
-        .arg("--format")
-        .arg("{{.ID}}\t{{.Repository}}\t{{.Tag}}")
-        .output()
-        .expect("Cannot run 'docker images'. Please check docker installation.");
-
-    let br = BufReader::new(out.stdout.as_slice());
-    let mut hash: HashMap<String, HashSet<image::ImageEntry>> = HashMap::new();
-    let ver_parser = version::parser();
-
-    for (_, line) in br.lines().enumerate() {
-        let l = line.unwrap();
-        let mut z = l.split('\t');
-        let id = z.next().unwrap();
-        let repository = z.next().unwrap();
-        let tag = z.next().unwrap();
-        match ver_parser.parse(tag) {
-            None => println!("Version(={}) is unrecognized ignored: {}", tag, l),
-            Some(ver) => {
-                match hash.get_mut(repository) {
-                    Some(entry) => {
-                        entry.insert(image::ImageEntry {id: id.to_string(), ver: ver});
-                    },
-                    None => {
-                        let mut set = HashSet::new();
-                        set.insert(image::ImageEntry {id: id.to_string(), ver: ver});
-                        hash.insert(repository.to_string(), set);
-                    }
-                }
-            }
-        }
-    }
-
-    image::Images {entries: hash}
 }
 
 #[test]
