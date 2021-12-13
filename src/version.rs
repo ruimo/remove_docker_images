@@ -10,6 +10,7 @@ pub struct Version {
     pub patch: i32,  // If patch version does not exist, patch = -1
     pub is_snapshot: bool,
     pub branch: Option<String>,
+    pub raw: String,
 }
 
 pub struct VersionParser {
@@ -50,7 +51,8 @@ impl VersionParser {
                 minor: minor,
                 patch: patch,
                 is_snapshot: is_snapshot,
-                branch: branch
+                branch: branch,
+                raw: s.to_string(),
             }
         })
     }
@@ -80,12 +82,7 @@ impl Hash for Version {
 
 impl fmt::Display for Version {
      fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-         write!(f, "{}{}{}{}{}",
-                self.major,
-                if self.minor == -1 { "".to_string() } else { format!(".{}", self.minor) },
-                if self.patch == -1 { "".to_string() } else { format!(".{}", self.patch) },
-                self.branch.as_ref().map(|b| format!("-{}", b)).unwrap_or("".to_string()),
-                if self.is_snapshot { "-SNAPSHOT" } else { "" })
+         write!(f, "{}", self.raw)
     }
 }
 
@@ -201,6 +198,7 @@ fn v() {
     assert_eq!(v.patch, 2);
     assert_eq!(v.is_snapshot, false);
     assert_eq!(v.branch, None);
+    assert_eq!(format!("{}", v), "v0.31.2");
 }
 
 #[test]
