@@ -168,5 +168,5 @@ You can create API key at web console:
 ## Binary
 
 Linux(x86_64):
-[0.1.0-SNAPSHOT](http://static.ruimo.com/release/remove_docker_images/0.1.0-SNAPSHOT/remove_docker_images)
+[0.2.0](http://static.ruimo.com/release/remove_docker_images/0.2.0/remove_docker_images)
 
