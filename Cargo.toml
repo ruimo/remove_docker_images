@@ -1,6 +1,6 @@
 [package]
 name = "remove_docker_images"
-version = "0.2.0-dev.1"
+version = "0.2.0"
 authors = ["Shisei Hanai <ruimo.uno@gmail.com>"]
 edition = "2018"
 
