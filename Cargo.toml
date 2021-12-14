@@ -2,7 +2,9 @@
 name = "remove_docker_images"
 version = "0.2.0"
 authors = ["Shisei Hanai <ruimo.uno@gmail.com>"]
-edition = "2018"
+edition = "2021"
+description = "Remove obsolete docker images."
+license = "Apache-2.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
