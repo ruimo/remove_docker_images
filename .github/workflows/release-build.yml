@@ -1,0 +1,46 @@
+name: Release Build
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+    - '*'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: |
+        cargo build --verbose --release
+        cd target/release
+        zip ../../remove_docker_images-x86_64.zip remove_docker_images
+    - name: Run tests
+      run: cargo test --verbose
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+    - name: create release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with: 
+        tag_name: ${{ steps.get_version.outputs.VERSION }}
+        release_name: Release ${{ steps.get_version.outputs.VERSION }}
+        draft: false
+        prerelease: false
+    - name: Upload release assets
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: remove_docker_images-x86_64.zip
+        asset_name: remove_docker_images-x86_64.zip
+        asset_content_type: application/octet-stream
